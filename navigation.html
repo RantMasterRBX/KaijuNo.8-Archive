@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Site Navigation</title>
+  <style>
+    body { font-family: Arial, sans-serif; }
+    .search-container { margin: 20px auto; text-align: center; }
+    input[type="text"] { width: 300px; padding: 8px; }
+    input[type="submit"] { padding: 8px 12px; }
+  </style>
+</head>
+<body>
+  <h1>Site Navigation</h1>
+  <div class="search-container">
+    <form action="https://www.google.com/search" method="get" target="_blank">
+      <input type="hidden" name="as_sitesearch" value="https://rantmasterrbx.github.io/KaijuNo.8-Archive/">
+      <input type="hidden" name="as_filetype" value="html">
+      <input type="hidden" name="as_q" value="-gamesites.html">
+      <input type="text" name="q" placeholder="Search site pages..." required>
+      <input type="submit" value="Search">
+    </form>
+    <p>
+      <small>This tool uses Google to search all site pages (excluding <strong>gamesites.html</strong>).</small>
+    </p>
+  </div>
+</body>
+</html>
