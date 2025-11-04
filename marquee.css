@@ -1,0 +1,22 @@
+<div class="marquee">
+    This is a scrolling marquee using CSS!
+</div>
+
+<style>
+  .marquee {
+      width: 100%;
+      overflow: hidden;
+      white-space: nowrap;
+      box-sizing: border-box;
+      animation: scroll-left 10s linear infinite;
+  }
+
+  @keyframes scroll-left {
+      from {
+          transform: translateX(100%);
+      }
+      to {
+          transform: translateX(-100%);
+      }
+  }
+</style>
