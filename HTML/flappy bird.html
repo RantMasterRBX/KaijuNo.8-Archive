@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Flappy Bird</title>
+  <style>
+    body { margin: 0; overflow: hidden; background: skyblue; }
+    canvas { display: block; margin: auto; background: #70c5ce; }
+  </style>
+</head>
+<body>
+<canvas id="gameCanvas" width="320" height="480"></canvas>
+<script>
+  const canvas = document.getElementById('gameCanvas');
+  const ctx = canvas.getContext('2d');
+
+  let frames = 0;
+  const DEGREE = Math.PI / 180;
+
+  const sprite = new Image();
+  sprite.src = 'https://i.imgur.com/3xgU3Zz.png'; // Bird sprite
+
+  const state = {
+    current: 0,
+    getReady: 0,
+    game: 1,
+    over: 2
+  };
+
+  canvas.addEventListener("click", function() {
+    switch(state.current){
+      case state.getReady:
+        state.current = state.game;
+        break;
+      case state.game:
+        bird.flap();
+        break;
+      case state.over:
+        pipes.reset();
+        bird.reset();
+        score.reset();
+        state.current = state.getReady;
+        break;
+    }
+  });
+
+  const bird = {
+    x: 50,
+    y: 150,
+    w: 34,
+    h: 26,
+    gravity: 0.25,
+    jump: 4.6,
+    speed: 0,
+    rotation: 0,
+    draw: function(){
+      ctx.save();
+      ctx.translate(this.x, this.y);
+      ctx.rotate(this.rotation);
+      ctx.drawImage(sprite, 276, 112, this.w, this.h, -this.w/2, -this.h/2, this.w, this.h);
+      ctx.restore();
+    },
+    flap: function(){
+      this.speed = -this.jump;
+    },
+    update: function(){
+      if(state.current === state.getReady){
+        this.y = 150;
+        this.rotation = 0;
+      } else {
+        this.speed += this.gravity;
+        this.y += this.speed;
+
+        if(this.y + this.h/2 >= canvas.height){
+          this.y = canvas.height - this.h/2;
+          if(state.current === state.game){
+            state.current = state.over;
+          }
+        }
+
+        this.rotation = this.speed >= this.jump ? 90 * DEGREE : -25 * DEGREE;
+      }
+    },
+    reset: function(){
+      this.speed = 0;
+      this.y = 150;
+    }
+  };
+
+  const pipes = {
+    position: [],
+    top: { sX: 553, sY: 0 },
+    bottom: { sX: 502, sY: 0 },
+    w: 53,
+    h: 400,
+    gap: 85,
+    maxYPos: -150,
+    dx: 2,
+    draw: function(){
+      for(let i = 0; i < this.position.length; i++){
+        let p = this.position[i];
+        ctx.drawImage(sprite, this.top.sX, this.top.sY, this.w, this.h, p.x, p.y, this.w, this.h);
+        ctx.drawImage(sprite, this.bottom.sX, this.bottom.sY, this.w, this.h, p.x, p.y + this.h + this.gap, this.w, this.h);
+      }
+    },
+    update: function(){
+      if(state.current !== state.game) return;
+
+      if(frames % 100 === 0){
+        this.position.push({
+          x: canvas.width,
+          y: this.maxYPos * (Math.random() + 1)
+        });
+      }
+
+      for(let i = 0; i < this.position.length; i++){
+        let p = this.position[i];
+
+        p.x -= this.dx;
+
+        let bottomPipeYPos = p.y + this.h + this.gap;
+        if(bird.x + bird.w/2 > p.x && bird.x - bird.w/2 < p.x + this.w &&
+           bird.y + bird.h/2 > p.y && bird.y - bird.h/2 < p.y + this.h ||
+           bird.y + bird.h/2 > bottomPipeYPos && bird.y - bird.h/2 < bottomPipeYPos + this.h){
+          state.current = state.over;
+        }
+
+        if(p.x + this.w <= 0){
+          this.position.shift();
+          score.value++;
+        }
+      }
+    },
+    reset: function(){
+      this.position = [];
+    }
+  };
+
+  const score = {
+    value: 0,
+    draw: function(){
+      ctx.fillStyle = "#FFF";
+      ctx.strokeStyle = "#000";
+      ctx.lineWidth = 2;
+      ctx.font = "35px Tahoma";
+      ctx.fillText(this.value, canvas.width/2, 50);
+      ctx.strokeText(this.value, canvas.width/2, 50);
+    },
+    reset: function(){
+      this.value = 0;
+    }
+  };
+
+  function draw(){
+    ctx.fillStyle = "#70c5ce";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    pipes.draw();
+    bird.draw();
+    score.draw();
+  }
+
+  function update(){
+    bird.update();
+    pipes.update();
+  }
+
+  function loop(){
+    update();
+    draw();
+    frames++;
+    requestAnimationFrame(loop);
+  }
+
+  loop();
+</script>
+</body>
+</html>
