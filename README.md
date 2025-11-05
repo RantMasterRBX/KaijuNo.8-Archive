@@ -1,3 +1,5 @@
+![Logo](logo.png)
+
 Welcome to my archive project!
 </div>
 <div class="md-col-4">
