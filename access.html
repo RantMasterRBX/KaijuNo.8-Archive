@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kaiju No. 8 Archive</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Segoe UI', 'Tahoma', 'Geneva', 'Verdana', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom styles to create the distinct 2010s look (Aero Glass & Background) */
+
+        /* 1. Desktop Background */
+        body {
+            /* Set your image URL here. This placeholder simulates a standard Windows 7 background. */
+            background-image: url('G464F6PbMAA0n-s.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            overflow: hidden;
+            /* Ensure the body takes up the full screen */
+            height: 100vh;
+            width: 100vw;
+            margin: 0;
+            padding: 0;
+            /* Use the custom font from Tailwind config */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* 2. Taskbar Aero Glass Effect */
+        #taskbar {
+            /* Semi-transparent background with blur for the 'Aero Glass' effect */
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px); /* For compatibility */
+            /* Subtle dark to light gradient for depth */
+            background-image: linear-gradient(to top, rgba(50, 50, 50, 0.8), rgba(150, 150, 150, 0.8));
+        }
+
+        /* 3. Window Title Bar Look */
+        .title-bar {
+            /* Classic blue gradient for the active window title bar */
+            background: linear-gradient(to top, #0078d7, #4ca6e8);
+            border-bottom: 1px solid #0056a0;
+            cursor: grab;
+            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+            /* Important for dragging functionality */
+            user-select: none;
+        }
+
+        /* Icon Styling */
+        .desktop-icon img {
+            /* Ensure icons are the correct size and have spacing */
+            width: 48px;
+            height: 48px;
+            margin-bottom: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Desktop Area (99% of the screen above the taskbar) -->
+    <div id="desktop" class="absolute inset-0 pb-10 p-2 sm:p-4">
+        
+        <!-- Desktop Icon 1: My Projects -->
+        <a href="#" class="desktop-icon w-20 flex flex-col items-center mb-5 text-white text-xs sm:text-sm text-center no-underline cursor-pointer hover:bg-white/20 hover:border-white/50 border border-transparent rounded p-1"
+           onclick="openWindow('projects-window')">
+            
+            <!-- *** REPLACE THIS IMAGE URL WITH YOUR PROJECTS ICON *** -->
+            <img src="https://placehold.co/48x48/F0B900/ffffff?text=F" alt="Projects Folder" /> 
+            
+            <span>My Projects</span>
+        </a>
+
+        <!-- Desktop Icon 2: About Me -->
+        <a href="#" class="desktop-icon w-20 flex flex-col items-center mb-5 text-white text-xs sm:text-sm text-center no-underline cursor-pointer hover:bg-white/20 hover:border-white/50 border border-transparent rounded p-1"
+           onclick="openWindow('about-window')">
+            
+            <!-- *** REPLACE THIS IMAGE URL WITH YOUR ABOUT ICON *** -->
+            <img src="https://placehold.co/48x48/4CAF50/ffffff?text=G" alt="Globe Browser" />
+            
+            <span>About Me</span>
+        </a>
+
+        <!-- Draggable Window 1: About Me -->
+        <div id="about-window" class="window absolute hidden w-11/12 sm:w-1/2 min-w-[300px] max-w-lg bg-gray-100 rounded-lg border border-gray-400 shadow-2xl overflow-hidden" style="top: 10vh; left: 10vw;">
+            <div class="title-bar h-8 px-2 flex justify-between items-center text-sm font-bold text-white">
+                <span class="window-title">About Me - Website Information</span>
+                <div class="window-controls flex">
+                    <button class="minimize w-7 h-5 leading-none text-xl hover:bg-white/20 rounded-sm" onclick="minimizeWindow('about-window')">_</button>
+                    <button class="maximize w-7 h-5 leading-none text-xl hover:bg-white/20 rounded-sm">□</button>
+                    <button class="close w-7 h-5 leading-none text-xl hover:bg-red-600 rounded-sm" onclick="closeWindow('about-window')">X</button>
+                </div>
+            </div>
+            <div class="window-content p-4 text-gray-800 text-sm overflow-auto max-h-[calc(100vh-150px)]">
+                <h3 class="font-bold text-lg mb-2">Welcome to my new page!</h3>
+                <p>School blocks every single fun website</p>
+                <p class="mt-2">So I took it into my own hands!</p>
+            </div>
+        </div>
+
+        <!-- Draggable Window 2: My Projects -->
+        <div id="projects-window" class="window absolute hidden w-11/12 sm:w-1/2 min-w-[300px] max-w-lg bg-gray-100 rounded-lg border border-gray-400 shadow-2xl overflow-hidden" style="top: 20vh; left: 20vw;">
+            <div class="title-bar h-8 px-2 flex justify-between items-center text-sm font-bold text-white">
+                <span class="window-title">My Projects - Folder View</span>
+                <div class="window-controls flex">
+                    <button class="minimize w-7 h-5 leading-none text-xl hover:bg-white/20 rounded-sm" onclick="minimizeWindow('projects-window')">_</button>
+                    <button class="maximize w-7 h-5 leading-none text-xl hover:bg-white/20 rounded-sm">□</button>
+                    <button class="close w-7 h-5 leading-none text-xl hover:bg-red-600 rounded-sm" onclick="closeWindow('projects-window')">X</button>
+                </div>
+            </div>
+            <div class="window-content p-4 text-gray-800 text-sm overflow-auto max-h-[calc(100vh-150px)]">
+                <ul class="list-disc pl-5">
+                    <li class="mb-1">            <h2>List of Archived Sites</h2>
+            <ul class="archive-list
+                <a class="btn btn-default btn-lg btn-block" role="button" target="_blank" href="google.com">
+                   &nbsp;This website is being discontinued on March 1st, 2026 </a
+                </div>
+                <div class="col-md-4">
+                <a class="btn btn-default btn-lg btn-block" role="button" target="_blank" href="HTML/Device INFO.html">
+                   &nbsp;Device INFO </a
+                </div>
+                <div class="col-md-4">
+                <a class="btn btn-default btn-lg btn-block" role="button" target="_blank" href="HTML/build-a-molecule_en.html">
+                   &nbsp;PHET Build a Molecule </a>
+                    </div>
+                <div class="col-md-4">
+                <a class="btn btn-default btn-lg btn-block" role="button" target="_blank" href="HTML/circuit-construction-kit-ac-virtual-lab_en.html">
+                   &nbsp;PHET Circuit Construction Kit </a>
+                </div>
+                <div class="col-md-4">
+                    <a class="btn btn-default btn-lg btn-block" role="button" target="_blank" href="HTML/Search - Microsoft Bing.html">
+                  <img src="./images/3kh0.png" alt="icon" width="16" height="16" />&nbsp;Bing </a>
+                </div>
+                <div class="col-md-4">
+                    <a class="btn btn-default btn-lg btn-block" role="button" target="_blank" href=HTML/marquee.html>
+                  <img src="./images/3kh0.png" alt="icon" width="16" height="16" />&nbsp;Marquee </a>
+                    </div>
+                <div class="col-md-4">
+                    <a class="btn btn-default btn-lg btn-block" role="button" target="_blank" href="Scratch - Imagine, Program, Share.mhtml">
+                  <img src="./images/3kh0.png" alt="icon" width="16" height="16" />&nbsp;Scratch (MHTML) </a>
+                    </div>
+                <div class="col-md-4">
+                <a class="btn btn-default btn-lg btn-block" role="button" target="_blank" href="HTML/aasderfgty.html">
+                   &nbsp;Scratch (HTML) </a>
+                    </div>
+                <div class="col-md-4">
+                <a class="btn btn-default btn-lg btn-block" role="button" target="_blank" href="HTML/Nyan Marquee.html">
+                   &nbsp;Nyan Marquee </a>
+                    </div>
+                <div class="col-md-4">
+                <a class="btn btn-default btn-lg btn-block" role="button" target="_blank" href="memory/index.html">
+                   &nbsp;Memory </a>
+                    </div>
+                <div class="col-md-4">
+                <a class="btn btn-default btn-lg btn-block" role="button" target="_blank" href="snake/index.html">
+                   &nbsp;Snake </a>
+                    </div>
+                <div class="col-md-4">
+                <a class="btn btn-default btn-lg btn-block" role="button" target="_blank" href="light speed/index.html">
+                   &nbsp;Light Cycles </a>
+                    </div>
+                <div class="col-md-4">
+                <a class="btn btn-default btn-lg btn-block" role="button" target="_blank" href="HTML/flappy bird.html">
+                   &nbsp;Flappy Bird </a>
+                    </div>
+                <div class="col-md-4">
+                <a class="btn btn-default btn-lg btn-block" role="button" target="_blank" href="cube/cube.html">
+                   &nbsp;3D Cube </a>
+                    </div>
+                <div class="col-md-4">
+                <a class="btn btn-default btn-lg btn-block" role="button" target="_blank" href="plinko/plinko.html">
+                   &nbsp;Plinko </a>
+                    </div>
+                <div class="col-md-4">
+                <a class="btn btn-default btn-lg btn-block" role="button" target="_blank" href="HTML/Blocky Snakes.html">
+                   &nbsp;Blocky Snakes </a>
+                    </div>
+                <div class="col-md-4">
+                <a class="btn btn-default btn-lg btn-block" role="button" target="_blank" href="HTML/Cookie Clicker.html">
+                   &nbsp;Cookie Clicker </a>
+                    </div>
+                <div class="col-md-4">
+                <a class="btn btn-default btn-lg btn-block" role="button" target="_blank" href="HTML/Flappy Bird.html">
+                   &nbsp;Flappy Bird </a>
+                    </div>
+                <div class="col-md-4">
+                <a class="btn btn-default btn-lg btn-block" role="button" target="_blank" href="HTML/Kaji Run.html">
+                   &nbsp;Kaiju Run </a>
+                    </div>
+                <div class="col-md-4">
+                <a class="btn btn-default btn-lg btn-block" role="button" target="_blank" href="HTML/Minecraft Indev.html">
+                   &nbsp;Minecraft Indev </a>
+                    </div>
+                <div class="col-md-4">
+                <a class="btn btn-default btn-lg btn-block" role="button" target="_blank" href="HTML/Paper.io 2.html">
+                   &nbsp;Paper.IO </a>
+                </div>
+                <div class="col-md-4">
+                <a class="btn btn-default btn-lg btn-block" role="button" target="_blank" href="HTML/EaglercraftX_1.8_u53_Offline_Signed.html">
+                   &nbsp;Minecraft 1.8 </a>
+                </div>
+                <div class="col-md-4">
+                <a class="btn btn-default btn-lg btn-block" role="button" target="_blank" href="HTML/Ragdoll Archers.html">
+                   &nbsp;Ragdoll Archers </a></li>
+                    </div>
+                <div class="col-md-4">
+                <a class="btn btn-default btn-lg btn-block" role="button" target="_blank" href="HTML/ULTRAKILL.html">
+                   &nbsp;Ultrakill </a></li>
+                    </div>
+                <div class="col-md-4">
+                <a class="btn btn-default btn-lg btn-block" role="button" target="_blank" href="HTML/gd.html">
+                   &nbsp;Geometry Dash </a></li>
+                    </div>
+                <div class="col-md-4">
+                <a class="btn btn-default btn-lg btn-block" role="button" target="_blank" href="HTML/games.html.html">
+                   &nbsp;Tetris Minesweeper </a></li>
+                    </div>
+                <div class="col-md-4">
+                <a class="btn btn-default btn-lg btn-block" role="button" target="_blank" href="HTML/30dolar.html">
+                   &nbsp;Don't you lecture me </a></li>
+                    </div>
+                <div class="col-md-4">
+                <a class="btn btn-default btn-lg btn-block" role="button" target="_blank" href="HTML/dinosaur.html">
+                   &nbsp;Chrome Dino </a></li>
+                    <div class="col-md-4">
+                <a class="btn btn-default btn-lg btn-block" role="button" target="_blank" href="HTML/Minecraft 1.12.2.html">
+                   &nbsp;Minecraft 1.12.2 </a></li>
+                </ul>
+                <p class="mt-4 text-xs italic">Imagine this is a file browser view!</p>
+            </div>
+        </div>
+
+
+    </div>
+
+    <!-- Taskbar (Fixed at the bottom) -->
+    <div id="taskbar" class="fixed bottom-0 left-0 right-0 h-10 flex items-center px-2 z-50 border-t border-white/50">
+        
+        <!-- Start Button -->
+        <button id="start-button" class="h-8 px-3 mr-3 bg-blue-600 text-white font-bold rounded shadow-lg border border-blue-800 hover:bg-blue-700 transition duration-150" title="Start Menu">
+            <span class="text-sm">Start</span>
+        </button>
+
+        <!-- Taskbar Running Icons -->
+        <div class="taskbar-icons flex-grow flex space-x-1">
+            <button id="task-about-window" class="taskbar-icon text-white text-sm px-3 h-8 rounded hover:bg-white/10 transition duration-150" onclick="toggleWindow('about-window')">
+                About Me
+            </button>
+            <button id="task-projects-window" class="taskbar-icon text-white text-sm px-3 h-8 rounded hover:bg-white/10 transition duration-150" onclick="toggleWindow('projects-window')">
+                Projects
+            </button>
+        </div>
+
+        <!-- System Tray -->
+        <div id="system-tray" class="flex flex-col items-end justify-center px-3 text-white text-xs border-l border-white/30 h-full">
+            <span id="current-time"></span>
+            <span id="current-date"></span>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const windows = document.querySelectorAll('.window');
+            windows.forEach(makeWindowDraggable);
+            updateClock();
+            setInterval(updateClock, 1000); // Update clock every second
+        });
+
+        // --- Clock Functionality ---
+        function updateClock() {
+            const now = new Date();
+            const timeOptions = { hour: '2-digit', minute: '2-digit', hour12: true };
+            const dateOptions = { month: '2-digit', day: '2-digit', year: 'numeric' };
+            
+            document.getElementById('current-time').textContent = now.toLocaleTimeString('en-US', timeOptions);
+            document.getElementById('current-date').textContent = now.toLocaleDateString('en-US', dateOptions);
+        }
+
+        // --- Window Management ---
+        let highestZIndex = 51; // Windows start at 50
+
+        function openWindow(id) {
+            const win = document.getElementById(id);
+            const taskBtn = document.getElementById(`task-${id}`);
+            if (win.style.display === 'none' || win.style.display === '') {
+                win.style.display = 'block';
+                win.style.zIndex = ++highestZIndex;
+                taskBtn.classList.add('bg-white/20', 'border', 'border-white/50'); // Active state visual
+            } else {
+                // If already open, just bring to front
+                win.style.zIndex = ++highestZIndex;
+            }
+        }
+
+        function closeWindow(id) {
+            document.getElementById(id).style.display = 'none';
+            document.getElementById(`task-${id}`).classList.remove('bg-white/20', 'border', 'border-white/50');
+        }
+
+        function minimizeWindow(id) {
+            // In a full desktop environment, this would hide it and only show the taskbar icon.
+            // For now, we'll just close it.
+            closeWindow(id);
+        }
+
+        function toggleWindow(id) {
+            const win = document.getElementById(id);
+            if (win.style.display === 'block') {
+                closeWindow(id);
+            } else {
+                openWindow(id);
+            }
+        }
+
+        // --- Draggable Functionality ---
+        function makeWindowDraggable(win) {
+            const titleBar = win.querySelector('.title-bar');
+            let isDragging = false;
+            let currentX;
+            let currentY;
+            let initialX;
+            let initialY;
+            let xOffset = 0;
+            let yOffset = 0;
+
+            titleBar.addEventListener('mousedown', dragStart);
+            win.addEventListener('mouseup', dragEnd);
+            win.addEventListener('mousemove', drag);
+            
+            // Touch events for mobile compatibility
+            titleBar.addEventListener('touchstart', dragStart);
+            win.addEventListener('touchend', dragEnd);
+            win.addEventListener('touchmove', drag);
+
+            // Bring to front on click
+            win.addEventListener('mousedown', () => {
+                win.style.zIndex = ++highestZIndex;
+            });
+
+            function dragStart(e) {
+                if (e.target.closest('.window-controls')) return; // Ignore clicks on close/min/max buttons
+                
+                let clientX, clientY;
+
+                if (e.type === "touchstart") {
+                    clientX = e.touches[0].clientX;
+                    clientY = e.touches[0].clientY;
+                } else {
+                    clientX = e.clientX;
+                    clientY = e.clientY;
+                    e.preventDefault();
+                }
+
+                initialX = clientX - xOffset;
+                initialY = clientY - yOffset;
+
+                isDragging = true;
+                titleBar.style.cursor = 'grabbing';
+            }
+
+            function dragEnd(e) {
+                if (!isDragging) return;
+
+                initialX = currentX;
+                initialY = currentY;
+                isDragging = false;
+                titleBar.style.cursor = 'grab';
+            }
+
+            function drag(e) {
+                if (!isDragging) return;
+                
+                let clientX, clientY;
+
+                if (e.type === "touchmove") {
+                    clientX = e.touches[0].clientX;
+                    clientY = e.touches[0].clientY;
+                } else {
+                    clientX = e.clientX;
+                    clientY = e.clientY;
+                    e.preventDefault();
+                }
+
+                currentX = clientX - initialX;
+                currentY = clientY - initialY;
+
+                xOffset = currentX;
+                yOffset = currentY;
+
+                setTranslate(currentX, currentY, win);
+            }
+
+            function setTranslate(xPos, yPos, el) {
+                el.style.transform = "translate3d(" + xPos + "px, " + yPos + "px, 0)";
+            }
+        }
+    </script>
+</body>
+</html>
+
+                        
